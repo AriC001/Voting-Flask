@@ -1,0 +1,23 @@
+.form1{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-top: 1rem;
+    
+}
+.conteiner{
+    border: 5px solid greenyellow;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+input{
+    margin: 1rem;
+}
+.clubes{
+   
+    height: 4rem;
+}
+.UNC{
+    height: 3rem;
+}
