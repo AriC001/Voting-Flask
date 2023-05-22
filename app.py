@@ -1,6 +1,11 @@
 from flask import Flask, redirect, url_for, request, render_template,session
 app = Flask(__name__)
 import pyrebase
+import json
+import math
+
+#data = json.load(f)
+
 
 config={
     'apiKey': "AIzaSyAyMHVwRqWi1f_EVR9UB6_iYQ75tNXpbs8",
@@ -18,6 +23,15 @@ app.secret_key = 'unsecreto'
 
 @app.route('/',methods=["GET","POST"])
 def index():
+    option = 'login'
+    f = open('results.json','r')
+    jsonData = json.load(f)
+    f.close()
+    votos = []
+    for i in jsonData:
+        votos.append(jsonData[i])
+    if('user' in session):
+        option = 'logout'
     if request.method == 'POST':
         if request.form["LoginButton"] == "Login":
            return redirect(url_for('login'))
@@ -26,22 +40,18 @@ def index():
            return redirect(url_for('login'))
            #return render_template('login.html')
     else:
-       return render_template('index.html')
-   
-
-@app.route('/success/<name>')
-def success(name):
-   return 'welcome %s' % name
+       return render_template('index.html',votos=votos,option=option)
 
 @app.route('/login',methods = ['POST', 'GET'])
 def login():
     if('user' in session):
+        email = session['user']
         #return 'Hi,{}'.format(session['user'])
-        file = open('votelog.txt','r')
-        for x in file: #ver si el email esta en el archivo
-            if x == email:
-                file.close()
-                return redirect(url_for('teamsNoVoting'))
+        # file = open('votelog.txt','r')
+        with open('votelog.txt', 'r') as file:
+            content = file.read()
+            if email in content:
+                return redirect('login')
         file.close()
         return redirect(url_for('teams'))
     if request.method == 'POST':
@@ -53,12 +63,14 @@ def login():
             try:
                 user = auth.sign_in_with_email_and_password(email,password)
                 session['user'] = email
-                file = open('votelog.txt','r')
-                for x in file: #ver si el email esta en el archivo
-                    if x == email:
+                email = session['user']
+                #return 'Hi,{}'.format(session['user'])
+                # file = open('votelog.txt','r')
+                with open('votelog.txt', 'r') as file:
+                    content = file.read()
+                    if email in content:
                         file.close()
-                        return redirect(url_for('teamsNoVoting'))
-                file.close()
+                        return redirect('/')
                 return redirect(url_for('teams'))
                 #print(user)
             except:
@@ -99,7 +111,58 @@ def logout():
 
 @app.route('/teams',methods = ['POST', 'GET'])
 def teams():
-    return render_template('teams.html')
+    if request.method == 'POST':
+        file = open('votelog.txt','a')
+        email = session['user']
+        file.write(email+'\n')
+        file.close()
+        if request.form["Equipo"] == "BOCA":
+            with open('results.json') as f:
+                data = json.load(f)
+            for valor in data:
+                if valor =='Boca':
+                    data[valor] = data[valor] + 1
+            with open('results.json', 'w') as f:
+                json.dump(data, f)
+        elif request.form["Equipo"] == "RIVER":
+            with open('results.json') as f:
+                data = json.load(f)
+            for valor in data:
+                if valor == 'River':
+                    data[valor] = data[valor] + 1
+            with open('results.json', 'w') as f:
+                json.dump(data, f)
+        elif request.form["Equipo"] == "INDEPENDIENTE":
+            with open('results.json') as f:
+                data = json.load(f)
+            for valor in data:
+                if valor == 'Independiente':
+                    data[valor] = data[valor] + 1
+            with open('results.json', 'w') as f:
+                json.dump(data, f)
+        elif request.form["Equipo"] == "TOMBA":
+            with open('results.json') as f:
+                data = json.load(f)
+            for valor in data:
+                if valor == 'Tomba':
+                    data[valor] = data[valor] + 1
+            with open('results.json', 'w') as f:
+                json.dump(data, f)
+        # f = open('results.json','r')
+        # jsonData = json.load(f)
+        # f.close()
+        # votos = []
+        # for i in jsonData:
+        #     votos.append(jsonData[i])
+        return redirect('/')
+
+    f = open('results.json','r')
+    jsonData = json.load(f)
+    f.close()
+    votos = []
+    for i in jsonData:
+        votos.append(jsonData[i])
+    return render_template('teams.html',votos = votos)
 
 @app.route('/votingresults')
 def teamsNoVoting():
