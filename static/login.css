@@ -133,3 +133,59 @@ margin-right: 4px;
     padding-bottom: 40rem;
     margin-top: 3rem;
 }
+
+.loginFailed{
+    color: red;
+    font-family: 'Verdana',Sans-serif;
+    height: 1rem;
+    display: none;
+}
+
+
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    background-color: aliceblue;
+    padding-bottom: 0.5rem;
+    padding-top: 0.4rem;
+    padding-left: 0.8rem;
+}
+
+/* A ANIMACION */
+a {
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    padding: 1rem 1.5rem;
+    position: relative;
+
+    font-weight: 500;
+    text-decoration: none;
+    background-color: transparent;
+    color: #232323;
+    transition: color 0.3s ease;
+  }
+  
+a:not(.navbar-brand,.nav-link,.btn):hover {
+    color: green;
+  }
+  
+a:not(.navbar-brand,.nav-link,.mr-4,.btn):after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: green;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+a:not(.navbar-brand,.nav-link,.mr-4,.btn):hover:after{ 
+    width: 100%; 
+    left: 0; 
+  }

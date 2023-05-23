@@ -74,7 +74,7 @@ def login():
                 return redirect(url_for('teams'))
                 #print(user)
             except:
-                return 'Failed to Login'
+                return render_template('login.html',displayProp='block')
             # if email is not in database
                 #   return message 'no estas registrado'
             # si esta registrado login y mandarlo a pagina votacion
@@ -82,7 +82,7 @@ def login():
                 # si ya voto solo mostrar los resultados que se van actualizando.               
             return render_template('login.html')
     else:
-      return render_template('login.html')
+      return render_template('login.html',displayProp='none')
 
 @app.route('/register',methods = ['POST', 'GET'])
 def register():
@@ -99,8 +99,10 @@ def register():
                     session['user'] = email
                     return redirect(url_for('teams'))
                 except:
-                    return 'Failed to Register'
-            return render_template('register.html')
+                    return render_template('register.html',displayProp='block')
+            else:
+                return render_template('register.html',displayProp='noMatch')
+            # return render_template('register.html')
    else:
         return render_template('register.html')
 

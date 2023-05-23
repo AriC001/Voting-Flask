@@ -8,8 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/login.css">
+    <script src="{{url_for('static', filename='app.js')}}"></script>
 </head>
 <body>
+    <article class="wrapper">
+        <a href="{{url_for('index')}}">GoBack</a>
+    </article>
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
@@ -19,17 +23,34 @@
 
         <label for="username">Username</label>
         <input type="text" name="email" placeholder="Email or Phone" id="username">
+        <span class="loginFailed" id="invalidEmail">Invalid Email</span>
 
         <label for="password">Password</label>
         <input type="password" name="password" placeholder="Password" id="password">
 
         <label for="password">Confirm Password</label>
         <input type="password" name="passwordConfirm" placeholder="Password" id="password">
+        <span class="loginFailed"
+        style="color: red;
+        font-family: 'Verdana',Sans-serif;
+        height: 1rem;
+        {% if displayProp=='block' or displayProp=='noMatch' %}
+            display: block;
+        {% else %}
+            display: none;
+        {% endif %}"
+        >{% if displayProp=='noMatch'%} 
+            Passwords dont Match
+        {% else %}
+            Failed to Register
+        {% endif %}
+        </span>
+        
 
         <input type="submit" class="button" value="Register" name="LogIn/Register">
         <input type="submit" class="button" value="Go LogIn" name="LogIn/Register">
 
-        <article>Copyright (c) 2021 by Foolish Developer (https://codepen.io/fghty/pen/PojKNEG)</article>
+        <!-- <article>Copyright (c) 2021 by Foolish Developer (https://codepen.io/fghty/pen/PojKNEG)</article> -->
     </form>
 </body>
 </html>
