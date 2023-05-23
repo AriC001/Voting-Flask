@@ -1,3 +1,8 @@
 /glassmorphism-login-form-tutorial-in-html-css
-__pycache__
-.venv
+venv/
+.env
+ 
+*.pyc
+__pycache__/
+ 
+instance
