@@ -2,10 +2,7 @@ from flask import Flask, redirect, url_for, request, render_template,session
 app = Flask(__name__)
 import pyrebase
 import json
-import math
-
-#data = json.load(f)
-
+import threading
 
 config={
     'apiKey': "AIzaSyAyMHVwRqWi1f_EVR9UB6_iYQ75tNXpbs8",
@@ -21,15 +18,25 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 app.secret_key = 'unsecreto'
 
-@app.route('/',methods=["GET","POST"])
-def index():
-    option = 'login'
+votos = []
+def votingUpdate():
+    votos.clear()
     f = open('results.json','r')
     jsonData = json.load(f)
     f.close()
-    votos = []
     for i in jsonData:
         votos.append(jsonData[i])
+    return votos
+
+@app.route('/',methods=["GET","POST"])
+def index():
+    option = 'login'
+    # f = open('results.json','r')
+    # jsonData = json.load(f)
+    # f.close()
+    # votos = []
+    # for i in jsonData:
+    #     votos.append(jsonData[i])
     if('user' in session):
         option = 'logout'
     if request.method == 'POST':
@@ -40,7 +47,7 @@ def index():
            return redirect(url_for('login'))
            #return render_template('login.html')
     else:
-       return render_template('index.html',votos=votos,option=option)
+       return render_template('index.html',votos=votingUpdate(),option=option)
 
 @app.route('/login',methods = ['POST', 'GET'])
 def login():
@@ -158,17 +165,19 @@ def teams():
         #     votos.append(jsonData[i])
         return redirect('/')
 
-    f = open('results.json','r')
-    jsonData = json.load(f)
-    f.close()
-    votos = []
-    for i in jsonData:
-        votos.append(jsonData[i])
-    return render_template('teams.html',votos = votos)
+    # f = open('results.json','r')
+    # jsonData = json.load(f)
+    # f.close()
+    # votos = []
+    # for i in jsonData:
+    #     votos.append(jsonData[i])
+    return render_template('teams.html',votos = votingUpdate())
 
 @app.route('/votingresults')
 def teamsNoVoting():
     return render_template('/teamsNoVoting')
 
 if __name__ == '__main__':
-   app.run(host="0.0.0.0",port=5000, debug = True)
+    thread1 = threading.Thread(target=votingUpdate(),daemon=True)
+    thread1.start()
+    app.run(host="0.0.0.0",port=5000, debug = True)
