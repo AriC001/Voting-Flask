@@ -1,14 +1,12 @@
 from flask import Flask, redirect, url_for, request, render_template,session
 from flask_socketio import SocketIO,emit
 # from flask_sock import Sock
-from threading import Lock
 import pyrebase
 import json
 
 app = Flask(__name__)
 app.secret_key = 'unsecreto'
 socketio= SocketIO(app)
-# sock = Sock(app)
 
 config={
     'apiKey': "AIzaSyAyMHVwRqWi1f_EVR9UB6_iYQ75tNXpbs8",
@@ -23,9 +21,6 @@ config={
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
-thread = None
-tread_lock = Lock()
-
 votos = []
 @socketio.on('connect')
 def ws_connect():
@@ -36,31 +31,6 @@ def ws_connect():
     for i in jsonData:
         votos.append(jsonData[i])
     emit('votos',votos,broadcast=True)
-
-# votos = []
-# @sock.route('/echo')
-# def echo(ws):
-#     while True:
-#         #data=ws.receive()
-#         votos.clear()
-#         f = open('results.json','r')
-#         jsonData = json.load(f)
-#         f.close()
-#         for i in jsonData:
-#             votos.append(jsonData[i])
-#         ws.send(votos)
-
-# votos = []
-# def votingUpdate():
-#     while True:
-#         votos.clear()
-#         f = open('results.json','r')
-#         jsonData = json.load(f)
-#         f.close()
-#         for i in jsonData:
-#             votos.append(jsonData[i])
-#         socketio.emit('votos',votos)
-#         socketio.sleep(1)
 
 @app.route('/',methods=["GET","POST"])
 def index():
@@ -87,8 +57,6 @@ def index():
 def login():
     if('user' in session):
         email = session['user']
-        #return 'Hi,{}'.format(session['user'])
-        # file = open('votelog.txt','r')
         with open('votelog.txt', 'r') as file:
             content = file.read()
             if email in content:
@@ -105,23 +73,14 @@ def login():
                 user = auth.sign_in_with_email_and_password(email,password)
                 session['user'] = email
                 email = session['user']
-                #return 'Hi,{}'.format(session['user'])
-                # file = open('votelog.txt','r')
                 with open('votelog.txt', 'r') as file:
                     content = file.read()
                     if email in content:
                         file.close()
                         return redirect('/')
                 return redirect(url_for('teams'))
-                #print(user)
             except:
                 return render_template('login.html',displayProp='block')
-            # if email is not in database
-                #   return message 'no estas registrado'
-            # si esta registrado login y mandarlo a pagina votacion
-                # si no voto dejarlo votar
-                # si ya voto solo mostrar los resultados que se van actualizando.               
-            return render_template('login.html')
     else:
       return render_template('login.html',displayProp='none')
 
@@ -191,12 +150,6 @@ def teams():
                     data[valor] = data[valor] + 1
             with open('results.json', 'w') as f:
                 json.dump(data, f)
-        # f = open('results.json','r')
-        # jsonData = json.load(f)
-        # f.close()
-        # votos = []
-        # for i in jsonData:
-        #     votos.append(jsonData[i])
         return redirect('/')
 
     f = open('results.json','r')
@@ -212,7 +165,4 @@ def teamsNoVoting():
     return render_template('/teamsNoVoting')
 
 if __name__ == '__main__':
-    # socketio.run(app)
-    # thread1 = threading.Thread(target=votingUpdate(),daemon=True)
-    # thread1.start()
     app.run(host="0.0.0.0",port=5000, debug = True)
