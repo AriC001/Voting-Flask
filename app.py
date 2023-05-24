@@ -1,8 +1,11 @@
 from flask import Flask, redirect, url_for, request, render_template,session
-app = Flask(__name__)
+from flask_socketio import SocketIO
+from threading import Lock
 import pyrebase
 import json
-import threading
+#import threading
+app = Flask(__name__)
+socketio= SocketIO(app, cors_allowed_origins='*')
 
 config={
     'apiKey': "AIzaSyAyMHVwRqWi1f_EVR9UB6_iYQ75tNXpbs8",
@@ -18,15 +21,27 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 app.secret_key = 'unsecreto'
 
+thread = None
+tread_lock = Lock()
+
+@socketio.on('connect')
+def connect():
+    global thread
+    with thread_lock:
+            if thread is None:
+                thread = socketio.start_background_task(votingUpdate)
+
 votos = []
 def votingUpdate():
-    votos.clear()
-    f = open('results.json','r')
-    jsonData = json.load(f)
-    f.close()
-    for i in jsonData:
-        votos.append(jsonData[i])
-    return votos
+    while True:
+        votos.clear()
+        f = open('results.json','r')
+        jsonData = json.load(f)
+        f.close()
+        for i in jsonData:
+            votos.append(jsonData[i])
+        socketio.emit('votos',votos)
+        socketio.sleep(1)
 
 @app.route('/',methods=["GET","POST"])
 def index():
@@ -178,6 +193,7 @@ def teamsNoVoting():
     return render_template('/teamsNoVoting')
 
 if __name__ == '__main__':
-    thread1 = threading.Thread(target=votingUpdate(),daemon=True)
-    thread1.start()
+    socketio.run(app)
+    # thread1 = threading.Thread(target=votingUpdate(),daemon=True)
+    # thread1.start()
     app.run(host="0.0.0.0",port=5000, debug = True)
