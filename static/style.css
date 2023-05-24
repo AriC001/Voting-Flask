@@ -76,19 +76,20 @@ body{
     background-color: #080710;  
 }
 .background{
-    width: 430px;
+    /* width: 430px; */
+    /* width: 2rem;
     height: 60rem;
     position: absolute;
     transform: translate(-50%,-50%);
     left: 50%;
-    top: 50%;
+    top: 50%; */
 }
-.background .shape{
-    height: 200px;
+/* .background .shape{ */
+    /* height: 200px;
     width: 200px;
     position: absolute;
-    border-radius: 50%;
-}
+    border-radius: 50%; */
+/* }
 .shape:first-child{
     background: linear-gradient(
         #1845ad,
@@ -105,9 +106,25 @@ background: linear-gradient(
 );
 right: -30px;
 bottom: -80px;
-}
-form{
+} */
+.form2{
     height: 49rem;
+    width: 40rem;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 1rem 2rem 1rem 2rem;
+    margin-top:2.5rem;
+    margin-bottom: 2rem;
+}
+.form1{
+    height: 45rem;
     width: 40rem;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -121,14 +138,6 @@ form{
     padding: 2rem 2rem;
     margin-top:1rem;
     margin-bottom: 2rem;
-
-    /* display: flex; */
-    /* justify-content: space-between; */
-    /* flex-direction: row; */
-    /* column-gap: 5rem; */
-    /* row-gap:5rem; */
-    /* align-self: center; */
-    /* margin-top: 1rem; */
 }
 form *{
     font-family: 'Poppins',sans-serif;
@@ -137,12 +146,6 @@ form *{
     outline: none;
     border: none;
 }
-/* form h3{
-font-size: 32px;
-font-weight: 500;
-line-height: 42px;
-text-align: center;
-} */
 
 label{
     /* display: flex; */
@@ -244,4 +247,90 @@ input[type="radio"] {
 .submit:before {
 transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em white;
+}
+
+@media only screen and (max-width: 680px){
+    *{
+        font-size: small;
+    }
+    .unc{
+        height: 2.5rem;
+        margin-top: 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    *{
+        /* font-size: smaller; */
+    }
+    .unc{
+        margin-top: 0.5rem;
+        height: 2rem;
+    }
+    .form2{
+        height: 49rem;
+        width: 28rem;
+    }
+    .form1{
+        height: 49rem;
+        width: 28rem;
+    }
+    .contador{
+        height: 2rem;
+        width: 68%;
+    }
+    
+    .contador2{
+        height: 2rem;
+        width: 55%;
+    }
+}
+
+@media only screen and (max-height: 800px){
+    *{
+        /* font-size: small; */
+    }
+    .unc{
+        height: 2.5rem;
+        margin-top: 0.5rem;
+    }
+    .form2{
+        margin-top: 8rem;
+        height: 50rem;
+        width: 40rem;
+    }
+}
+@media only screen and (max-height: 601px){
+    *{
+        font-size: small;
+    }
+}
+
+@media only screen and (max-width: 380px){
+    *{
+        /* font-size: smaller; */
+    }
+    .unc{
+        margin-top: 0.5rem;
+        height: 2rem;
+    }
+    .form2{
+        height: 49rem;
+        width: 28rem;
+    }
+    .form1{
+        margin-top: 5rem;
+        height: 45rem;
+        width: 28rem;
+    }
+    .contador{
+        height: 2rem;
+        width: 68%;
+    }
+    
+    .contador2{
+        height: 2rem;
+        width: 55%;
+    }
+
 }

@@ -10,19 +10,24 @@ box-sizing: border-box;
 body{
 background-color: #080710;
 }
+
+@media only screen and (min-width: 506px){
+  .background{
+    width: 430px;
+    height: 520px;
+  }
+}
 .background{
-width: 430px;
-height: 520px;
-position: absolute;
-transform: translate(-50%,-50%);
-left: 50%;
-top: 50%;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 50%;
 }
 .background .shape{
-height: 200px;
-width: 200px;
-position: absolute;
-border-radius: 50%;
+  height: 15rem;
+  width: 15rem;
+  position: absolute;
+  border-radius: 50%;
 }
 .shape:first-child{
 background: linear-gradient(
@@ -43,7 +48,7 @@ bottom: -80px;
 }
 form{
     height: 36rem;
-    width: 400px;
+    width: 28rem;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
@@ -57,17 +62,17 @@ form{
     margin-top:1rem;
 }
 form *{
-font-family: 'Poppins',sans-serif;
-color: #ffffff;
-letter-spacing: 0.5px;
-outline: none;
-border: none;
+  font-family: 'Poppins',sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
 }
 form h3{
-font-size: 32px;
-font-weight: 500;
-line-height: 42px;
-text-align: center;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
 }
 
 label{
@@ -188,4 +193,57 @@ a:not(.navbar-brand,.nav-link,.mr-4,.btn):after {
 a:not(.navbar-brand,.nav-link,.mr-4,.btn):hover:after{ 
     width: 100%; 
     left: 0; 
+  }
+
+  @media only screen and (max-width: 505px){
+    *{
+      font-size: small;
+    }
+    form{
+      height: 38rem;
+      width: 28rem;
+    }
+    .background{
+      width: 30rem;
+      height: 40rem;
+    }
+    .background .shape{
+      margin-top: 7rem;
+      height: 5rem;
+      width: 5rem;
+      position: absolute;
+      border-radius: 50%;
+      margin-bottom: 4rem;
+    }
+  }
+
+  @media only screen and (max-width: 420px){
+    form{
+      height: 38rem;
+      width: 20rem;
+    }
+    .background{
+      width: 10rem;
+      height: 40rem;
+    }
+  }
+
+  @media only screen and (max-height: 800px){
+    form{
+      margin-top: 2rem;
+      height: 32rem;
+      width: 20rem;
+    }
+    .background{
+      width: 10rem;
+      height: 40rem;
+    }
+    .background .shape{
+      margin-top: 10.5rem;
+      height: 7rem;
+      width: 7rem;
+      position: absolute;
+      border-radius: 50%;
+      margin-bottom: 4rem;
+    }
   }

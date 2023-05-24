@@ -1,6 +1,6 @@
 import "https://cdn.socket.io/3.0.0/socket.io.js"
 window.onload = function () {
-    let socket = io("https://votting-flask-production.up.railway.app/");
+    let socket = io();
     const boca = document.getElementById('Boca')
     const river = document.getElementById('River')
     const indep = document.getElementById('Independiente')
