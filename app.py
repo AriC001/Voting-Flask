@@ -6,7 +6,8 @@ import json
 
 app = Flask(__name__)
 app.secret_key = 'unsecreto'
-socketio= SocketIO(app)
+# socketio= SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins=[], logger=True, engineio_logger=True)
 
 config={
     'apiKey': "AIzaSyAyMHVwRqWi1f_EVR9UB6_iYQ75tNXpbs8",
