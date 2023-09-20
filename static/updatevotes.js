@@ -5,12 +5,9 @@ window.onload = function () {
     const river = document.getElementById('River')
     const indep = document.getElementById('Independiente')
     const tomba = document.getElementById('Tomba')
-    // const  socket = new WebSocket('ws://localhost:5000/echo')
     socket.on('votos',function(votos){
         updatVotes(votos)
-        // updatVotes(ev.data)
     });
-    // socket.send()
 
     function updatVotes (votes){
         boca.value = votes[0]
