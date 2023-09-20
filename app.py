@@ -166,4 +166,3 @@ def teamsNoVoting():
 
 if __name__ == '__main__':
     app.run()
->>>>>>> 95dfff34ebe73ced0aadf152fc6ed46878f7511f
