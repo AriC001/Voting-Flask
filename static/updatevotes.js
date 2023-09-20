@@ -1,6 +1,8 @@
-import "https://cdn.socket.io/3.0.0/socket.io.js"
+// import "https://cdn.socket.io/3.0.0/socket.io.js"
+import "./socket.io.js"
 window.onload = function () {
-    let socket = io('ws://0.0.0.0:5000', {transports: ['websocket']});
+    let location = window.location.host
+    let socket = io("ws://localhost:5000", {transports: ['websocket']});
     const boca = document.getElementById('Boca')
     const river = document.getElementById('River')
     const indep = document.getElementById('Independiente')
