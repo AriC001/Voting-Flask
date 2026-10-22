@@ -46,7 +46,7 @@ six==1.16.0
 SQLAlchemy==2.0.15
 sseclient==0.0.27
 typing_extensions==4.6.0
-urllib3==2.0.2
+urllib3==2.8.0
 Werkzeug==2.2.3
 wrapt==1.15.0
 wsproto==1.2.0
